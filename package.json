@@ -1,0 +1,46 @@
+{
+  "name": "datnapi",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "nodemon ./bin/www"
+  },
+  "dependencies": {
+    "axios": "^1.6.2",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.2",
+    "braces": "^3.0.2",
+    "chokidar": "^3.5.3",
+    "constantinople": "^4.0.1",
+    "cookie-parser": "~1.4.6",
+    "cors": "^2.8.5",
+    "debug": "~4.3.4",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "firebase-tools": "^13.0.2",
+    "glob-parent": "^6.0.2",
+    "http-errors": "~2.0.0",
+    "http-proxy-middleware": "^2.0.6",
+    "jade": "^1.9.2",
+    "json5": "^2.2.3",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.0.3",
+    "morgan": "~1.10.0",
+    "ngrok": "^5.0.0-beta.2",
+    "node": "^21.2.0",
+    "pug": "^3.0.2",
+    "react-native-validator-form": "^1.0.0",
+    "sweetalert2": "^11.10.1",
+    "uglify-js": "^3.17.4"
+  },
+  "main": "app.js",
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "livereload": "^0.9.3",
+    "nodemon": "^3.0.2"
+  },
+  "preinstall": "npx npm-force-resolutions"
+}
