@@ -29,7 +29,7 @@ const your_jwt_secret_key = process.env.JWT_SECRET_KEY; // Lấy khóa từ bi�
 // Bây giờ bạn có thể sử dụng your_jwt_secret_key để tạo và xác minh JWT
 
 // database connect
-mongoose.connect("mongodb://localhost:27017", {
+mongoose.connect("mongodb+srv://baongoc45:452003Nn@cluster0.ysjpccc.mongodb.net/?retryWrites=true&w=majority", {
   // useNewUrlParser: true,
   // useUnifiedTopology: true
 })
