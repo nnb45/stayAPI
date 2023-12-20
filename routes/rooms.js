@@ -10,5 +10,5 @@ router.get('/rooms', getAllRooms);
 
 //patch chỉ cần gửi các trường cập nhập
 router.patch('/rooms/:id/updatestatus', updateRoomStatus);
-
+    
 module.exports = router;

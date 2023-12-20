@@ -43,7 +43,7 @@ mongoose.connect("mongodb+srv://baongoc45:452003Nn@cluster0.ysjpccc.mongodb.net/
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('view engine', 'html');
 
 app.use(logger('dev'));
 app.use(express.json());
