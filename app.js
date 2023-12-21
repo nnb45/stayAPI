@@ -1,5 +1,6 @@
 const createError = require('http-errors');
 const express = require('express');
+const exphbs = require('express-handlebars');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
@@ -29,21 +30,21 @@ const your_jwt_secret_key = process.env.JWT_SECRET_KEY; // Lấy khóa từ bi�
 // Bây giờ bạn có thể sử dụng your_jwt_secret_key để tạo và xác minh JWT
 
 // database connect
-mongoose.connect("mongodb+srv://baongoc45:452003Nn@cluster0.ysjpccc.mongodb.net/?retryWrites=true&w=majority", {
-  // useNewUrlParser: true,
-  // useUnifiedTopology: true
+mongoose.connect("mongodb+srv://baongoc_admin:452003Nn@cluster0.ysjpccc.mongodb.net/", {
+
 })
   .then(() => {
-    console.log("connect mongodb");
+    console.log(">>>>>>>>>> MongoDB Connnected!!!!!!!");
   })
   .catch(err => {
-    console.log(err);
+    console.log("Connect Error!", err);
   });
 
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'html');
+// app.engine('handlebars', hbs.engine);
+app.set('view engine', 'hbs');
 
 app.use(logger('dev'));
 app.use(express.json());
