@@ -13,6 +13,8 @@ router.get('/sort', sortHotels);
 //Tìm kiếm khách sạn theo thành phố và các thông số khác:
 // Search hotels based on criteria
 router.get('/search', searchHotels);
+//! https://stayapi-production.up.railway.app/api/hotel/search?queryType=hotelName&value=Majestic
+
 
 router.get('/filterByRoomStatus', filterByRoomStatus);
 
@@ -28,7 +30,7 @@ router.put('/:id', updateHotel);
 router.delete('/:id', deleteHotel);
 
 // Retrieve a specific hotel by ID
-router.get('/:id', getHotelById);
+router.get('/:id', getHotelById); //! API đã test 
 
 //Chi tiết khách sạn:
 // Retrieve detailed information about a hotel
