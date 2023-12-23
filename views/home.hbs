@@ -174,100 +174,23 @@
                                         <th>Quản lý</th>
                                     </tr>
                                 </thead>
-                                <!-- ... other HTML code ... -->
+                                <tbody>
+                                    {{#each rooms}}
+                                    <tr>
+                                        <td>{{this.hotelID.hotelName}}</td>
+                                        <td>{{this.roomType}}</td>
+                                        <td>{{this.roomStatus}}</td>
+                                        <td>{{this.roomPrice}}</td>
+                                        <td>
+                                            <button type="button" class="btn btn-primary"
+                                                onclick="goDetail('{{this._id}}');">Sửa</button>
 
-                                <tbody id="hotelRoomsTableBody">
-                                    <!-- The content inside the tbody will be populated dynamically by the script -->
+                                            <button type="button" class="btn btn-danger"
+                                                onclick="confirmDelete('{{this._id}}');">Xóa</button>
+                                        </td>
+                                    </tr>
+                                    {{/each}}
                                 </tbody>
-                                <script>
-                                    document.addEventListener('DOMContentLoaded', async function () {
-                                        try {
-                                            const response = await fetch('https://stayapi-production.up.railway.app/api/hotel/rooms/chitietht');
-                                            const data = await response.json();
-                                            console.log('Received data:', data);
-                                            updateTable(data);
-                                        } catch (error) {
-                                            console.error('Error fetching hotel rooms:', error);
-                                        }
-                                    });
-
-                                    function updateTable(data) {
-                                        const tableBody = document.getElementById('hotelRoomsTableBody');
-                                        // Clear existing rows before adding new ones
-                                        tableBody.innerHTML = '';
-
-                                        const generateRowId = (hotelId, roomId) => `${hotelId}-${roomId}`;
-
-                                        data.forEach((hotel) => {
-                                            hotel.rooms.forEach((room) => {
-                                                const rowId = generateRowId(hotel.hotelId, room.roomId);
-                                                const row = `<tr id="${rowId}">
-                                                        <td>${hotel.hotelName}</td>
-                                                        <td>${room.roomType}</td>
-                                                        <td>${room.roomStatus}</td>
-                                                        <td>${room.roomPrice}</td>
-                                                        <td>
-                                                            <a href="#" onclick="goDetail('${hotel._id}', '${room._id}')">Sửa</a>
-
-                                                            <button onclick="confirmDelete('${room._id}', '${hotel._id}')">Xóa</button>
-                                                        </td>
-                                                    </tr>`;
-                                                tableBody.insertAdjacentHTML('beforeend', row);
-                                            });
-                                        });
-                                    }
-
-                                    async function confirmDelete(roomId, hotelId) {
-                                        const isConfirmed = await Swal.fire({
-                                            title: 'Xác nhận xóa?',
-                                            text: 'Xóa sẽ mất!',
-                                            icon: 'warning',
-                                            showCancelButton: true,
-                                            confirmButtonColor: '#3085d6',
-                                            cancelButtonColor: '#d33',
-                                            confirmButtonText: 'Xóa'
-                                        });
-
-                                        if (isConfirmed.isConfirmed) {
-                                            try {
-                                                const url = `https://stayapi-production.up.railway.app/api/hotel/rooms/${hotelId}/${roomId}`;
-                                                const options = { method: 'DELETE' };
-                                                const response = await fetch(url, options);
-
-                                                if (response.ok) {
-                                                    // Parse the response directly, no need for response.json() here
-                                                    const result = await response.text();
-                                                    Swal.fire('Xóa thành công!', '', 'success');
-                                                    // Reload or update the table after successful deletion
-                                                    fetchHotelRooms();
-                                                } else {
-                                                    console.error('Server returned an error:', response.status, response.statusText);
-                                                    Swal.fire('Có lỗi xảy ra!', '', 'error');
-                                                }
-                                            } catch (error) {
-                                                console.error('Error deleting room:', error);
-                                                Swal.fire('Có lỗi xảy ra!', '', 'error');
-                                            }
-                                        }
-                                    }
-
-                                    function goDetail(hotelId, roomId) {
-                                        console.log('Navigating to form.html with hotelId:', hotelId, 'and roomId:', roomId);
-                                        // Use template literals to construct the URL with the hotelId and roomId
-                                        window.location.href = `/views/form.html?hotelId=${hotelId}&roomId=${roomId}`;
-                                    }
-
-                                    async function fetchHotelRooms() {
-                                        try {
-                                            const response = await fetch('https://stayapi-production.up.railway.app/api/hotel/rooms/chitietht');
-                                            const data = await response.json();
-                                            updateTable(data);
-                                        } catch (error) {
-                                            console.error('Error fetching hotel rooms:', error);
-                                        }
-                                    }
-                                </script>
-
                                 </body>
 
                                 </html>
@@ -322,3 +245,45 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 <!-- end document-->
+
+<script>
+    const fetchAPI = async (url, option) => {
+        const res = await fetch(url, option);
+        return res.json();
+    }
+    const confirmDelete = (id) => {
+        swal({
+            title: "Xác nhận xóa?",
+            text: "Xóa sẽ mất!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then(async (willDelete) => {
+                if (willDelete) {
+                    let url = `/hotels/${id}`;
+                    let option = {
+                        method: 'DELETE'
+                    }
+                    let result = await fetchAPI(url, option);
+                    if (result.status) {
+                        swal("Xóa thành công!", {
+                            icon: "success",
+                        });
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 1000);
+                    } else {
+                        swal("Xóa thất bại!", {
+                            icon: "error",
+                        });
+                    }
+                }
+            });
+    }
+
+    const goDetail = (id) => {
+        window.location.href = `/hotels/${id}/list`;
+    }
+
+</script>

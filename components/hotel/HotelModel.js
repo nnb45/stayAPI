@@ -1,6 +1,8 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
+const ObjectId = Schema.ObjectId;
 
-const HotelSchema = new mongoose.Schema({
+const hotelSchema = new Schema({
     _id: ObjectId,
     hotelName: { type: String, required: true, unique: true },
     hotelAddress: { type: String, required: true },
@@ -16,4 +18,5 @@ const HotelSchema = new mongoose.Schema({
     { timestamps: true }
 );
 
-exports.Hotel = mongoose.model("Hotel", HotelSchema);
+module.exports =
+    mongoose.models.hotel || mongoose.model("hotel", hotelSchema);
