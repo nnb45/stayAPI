@@ -184,7 +184,7 @@
                                 <script>
                                     document.addEventListener('DOMContentLoaded', async function () {
                                         try {
-                                            const response = await fetch('http://localhost:3000/api/hotel/rooms/chitietht');
+                                            const response = await fetch('https://stayapi-production.up.railway.app/api/hotel/rooms/chitietht');
                                             const data = await response.json();
                                             console.log('Received data:', data);
                                             updateTable(data);
