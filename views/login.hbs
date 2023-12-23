@@ -9,7 +9,7 @@
                         </a>
                     </div>
                     <div class="login-form">
-                        <form action="" method="post" id="loginForm">
+                        <form action="auth/login" method="post" id="loginForm" role="form">
                             <div class="form-group">
                                 <label>Email</label>
                                 <input class="au-input au-input--full" type="email" name="email" placeholder="email">
@@ -22,7 +22,7 @@
                             <!-- <button class="au-btn au-btn--block au-btn--green m-b-20" type="submit">sign in</button> -->
                             <form action="" method="post" id="loginForm">
                                 <button style="margin-top: 15px;" class="au-btn au-btn--block au-btn--green m-b-20"
-                                    type="button" onclick="login()">Sign In</button>
+                                    type="button" onclick="login();">Sign In</button>
                             </form>
                         </form>
                         {{!-- <div class="register-link">
@@ -42,30 +42,27 @@
     async function login() {
         const email = document.getElementsByName('email')[0].value;
         const password = document.getElementsByName('password')[0].value;
-    }
-
-    try {
-        const response = await $.ajax({
-            url: 'https://stayapi-production.up.railway.app/api/auth/login',
-            type: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify({ email, password }),
-            success: function (data) {
-                // Handle successful login
-                console.log('Đăng nhập thành công:', data);
-                localStorage.setItem('access_token', data.access_token);
-                window.location.href = 'table.html'; // Replace with your desired destination URL
-            },
-            error: function (error) {
-                // Handle failed login
-                console.error('Login failed', error);
-                alert('Tài khoản hoặc mật khẩu không đúng');
-            }
-        });
-    } catch (error) {
-        console.error('Error during login:', error);
-        alert('An unexpected error occurred. Please try again later.');
-
-    }
+        try {
+            const response = await $.ajax({
+                url: 'https://stayapi-production.up.railway.app/api/auth/login',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ email, password }),
+                success: function (data) {
+                    // Handle successful login
+                    console.log('Đăng nhập thành công:', data);
+                    localStorage.setItem('access_token', data.access_token);
+                    window.location.href = 'table.html'; // Replace with your desired destination URL
+                },
+                error: function (error) {
+                    // Handle failed login
+                    console.error('Login failed', error);
+                    alert('Tài khoản hoặc mật khẩu không đúng');
+                }
+            });
+        } catch (error) {
+            console.error('Error during login:', error);
+            alert('An unexpected error occurred. Please try again later.');
+        }
     }
 </script>
