@@ -36,7 +36,8 @@ router.get('/:id', getHotelById); //! API đã test
 // Retrieve detailed information about a hotel
 router.get('/details/:id', getHotelDetails);
 
-router.get('/rooms/:id', getHotelRoomsByHotelId);
+// get all room in hotel by hotel ID
+router.get('/:id/rooms/', getHotelRoomsByHotelId); //? update API
 
 router.get('/rooms/chitietht', getHotelRooms);
 
