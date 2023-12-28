@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { createHotel, getHotelRooms, getAllHotels, updateHotel, deleteHotel, getHotelById, searchHotels,
+const { createHotel, getHotelRooms, getHotelRoomsByHotelId, getAllHotels, updateHotel, deleteHotel, getHotelById, searchHotels,
     sortHotels,
     getHotelDetails,
     filterByRoomStatus, deleteRoom, getHotelRoomsSua, updateRoomDetailsById, getMostBookedRoomDetails } = require("../controllers/hotel");
@@ -36,7 +36,8 @@ router.get('/:id', getHotelById); //! API đã test
 // Retrieve detailed information about a hotel
 router.get('/details/:id', getHotelDetails);
 
-// router.get('/rooms/:id', getHotelRooms);
+router.get('/rooms/:id', getHotelRoomsByHotelId);
+
 router.get('/rooms/chitietht', getHotelRooms);
 
 // Delete a specific room by ID

@@ -192,6 +192,32 @@ const getHotelDetails = async (req, res, next) => {
     }
 }
 
+const getHotelRoomsByHotelId = async (req, res, next) => {
+    try {
+        const { hotelId } = req.params;
+
+        // Check if hotel exists
+        const hotel = await Hotel.findById(hotelId);
+
+        if (!hotel) {
+            return res.status(404).json({ message: 'Hotel not found' });
+        }
+
+        // Get all rooms of the hotel with room details and filter by room status
+        const rooms = await Room.find({ hotel: hotelId })
+            .populate('roomDetail')
+            .where('status', isRoomAvailable ? 'Trống' : roomStatus);
+
+        if (!rooms || rooms.length === 0) {
+            return res.status(404).json({ message: 'No rooms found with the specified status' });
+        }
+
+        res.status(200).json(rooms);
+    } catch (error) {
+        next(error);
+    }
+};
+
 const getHotelRooms = async (req, res, next) => {
     try {
         // Populate the 'rooms' field to get details of all rooms associated with all hotels
@@ -316,6 +342,7 @@ module.exports = {
     updateHotel,
     deleteHotel,
     getHotelById,
+    getHotelRoomsByHotelId,
     // existing functions...
     searchHotels,
     sortHotels,
