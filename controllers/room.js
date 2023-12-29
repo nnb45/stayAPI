@@ -50,7 +50,6 @@ const updateRoomStatus = async (req, res, next) => {
         } else {
             throw createError(400, 'Invalid action');
         }
-
         // Save the updated room
         const updatedRoom = await room.save();
 
@@ -59,6 +58,24 @@ const updateRoomStatus = async (req, res, next) => {
         next(error);
     }
 };
+
+const UpdateRoomisFinished = async (req, res, next) => {
+    try {
+        const room = await Room.findById(req.params.id);
+
+        if (!room) {
+            return res.status(404).json({ message: 'Room not found' });
+        }
+
+        room.isFinished = req.body.isFinished;
+
+        await room.save();
+
+        res.status(200).json({ message: 'isFinished updated successfully', room });
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error });
+    }
+}
 
 const deleteRoom = async (req, res, next) => {
     try {
@@ -117,5 +134,6 @@ module.exports = {
     updateRoom,
     deleteRoom,
     getAllRooms,
-    updateRoomStatus
+    updateRoomStatus,
+    UpdateRoomisFinished
 };
