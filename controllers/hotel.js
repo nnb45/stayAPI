@@ -206,14 +206,14 @@ const getHotelRoomsByHotelId = async (req, res, next) => {
             path: 'rooms',
             match: { _id: req.params.roomId },
             // populate: {
-            //     path: 'roomDetail',
+            //     path: 'room',
             // },
         });
 
         if (!rooms || rooms.length === 0) {
             return res.status(404).json({ message: 'No rooms found with the specified status' });
         }
-        res.status(200).json({ room: rooms.rooms });
+        res.status(200).json(rooms.rooms);
         console.log(getHotelRoomsByHotelId);
     } catch (error) {
         res.status(400);
