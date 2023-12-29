@@ -213,7 +213,7 @@ const getHotelRoomsByHotelId = async (req, res, next) => {
         if (!rooms || rooms.length === 0) {
             return res.status(404).json({ message: 'No rooms found with the specified status' });
         }
-        res.status(200).json({ success: true, data: rooms.rooms });
+        res.status(200).json({ room: rooms.rooms });
         console.log(getHotelRoomsByHotelId);
     } catch (error) {
         res.status(400);
