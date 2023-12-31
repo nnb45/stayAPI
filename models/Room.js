@@ -28,7 +28,7 @@ const RoomSchema = new mongoose.Schema({
     //check xem đã hủy hay đã đặt xong set lại roomstatus
     isFinished: {
         type: String,
-        enum: ['Plan', 'Done', 'Cancel'],
+        enum: ['Plan', 'Book', 'Done', 'Cancel'],
     },
 
     // Khóa ngoại đến HotelDetail

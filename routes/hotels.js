@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
 
-const { createHotel, getHotelRooms, getHotelRoomsByHotelId, getAllHotels, updateHotel, deleteHotel, getHotelById, searchHotels,
+const { createHotel, getHotelRooms, getHotelRoomsByHotelId, getAllRoomImageByHotelID, getAllHotels, updateHotel, deleteHotel, getHotelById, searchHotels,
     sortHotels,
     getHotelDetails,
     filterByRoomStatus, deleteRoom, getHotelRoomsSua, updateRoomDetailsById, getMostBookedRoomDetails } = require("../controllers/hotel");
 
-    //Sắp xếp:
+//Sắp xếp:
 // Sort hotels based on user criteria
 router.get('/sort', sortHotels);
 
@@ -19,7 +19,7 @@ router.get('/search', searchHotels);
 router.get('/filterByRoomStatus', filterByRoomStatus);
 
 //doanh thu 
-router.get('/getMostBookedRoomDetails', getMostBookedRoomDetails );
+router.get('/getMostBookedRoomDetails', getMostBookedRoomDetails);
 
 router.post('/', createHotel);
 router.get('/', getAllHotels);
@@ -35,6 +35,7 @@ router.get('/:id', getHotelById); //! API đã test
 //Chi tiết khách sạn:
 // Retrieve detailed information about a hotel
 router.get('/details/:id', getHotelDetails);
+router.get('/:id/roomImage', getAllRoomImageByHotelID); // get all room image by hotelID
 
 // get all room in hotel by hotel ID
 router.get('/:id/rooms/', getHotelRoomsByHotelId); //? update API

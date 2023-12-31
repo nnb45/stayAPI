@@ -182,32 +182,29 @@ const getMostBookedRoomDetails = async (req, res, next) => {
 
 const getHotelDetails = async (req, res, next) => {
     try {
-        const hotel = await Hotel.findById(req.params.id).populate('rooms').populate('hotelDetail');
+        // hotel detail by hotelID
+        const hotel = await Hotel.findById(req.params.id).populate('hotelDetail');
         if (!hotel) {
             return res.status(404).json({ message: 'Hotel not found' });
         }
-        res.status(200).json(hotel);
+        res.status(200).json(hotel.hotelDetail);
     } catch (error) {
         next(error);
     }
-}
+};
 
 const getHotelRoomsByHotelId = async (req, res, next) => {
     try {
         // const roomId = await Room.findById(req.params.id);
         // Check if hotel exists
         const hotel = await Hotel.findById(req.params.id);
-
         if (!hotel) {
             return res.status(404).json({ message: 'Hotel not found' });
         }
-        // Get all rooms of the hotel, filter by room status
+        // Get all rooms of the hotel
         const rooms = await Hotel.findOne({ _id: req.params.id }).populate({
             path: 'rooms',
             match: { _id: req.params.roomId },
-            // populate: {
-            //     path: 'room',
-            // },
         });
 
         if (!rooms || rooms.length === 0) {
@@ -217,6 +214,28 @@ const getHotelRoomsByHotelId = async (req, res, next) => {
         console.log(getHotelRoomsByHotelId);
     } catch (error) {
         res.status(400);
+        next(error);
+    }
+};
+
+const getAllRoomImageByHotelID = async (req, res, next) => {
+    try {
+        // Check if hotel exists
+        const hotel = await Hotel.findById(req.params.id);
+        if (!hotel) {
+            return res.status(404).json({ message: 'Hotel not found' });
+        }
+
+        const rooms = await Hotel.findOne({ _id: req.params.id }).populate({
+            path: 'rooms',
+            populate: { path: 'roomImage' },
+        });
+        if (!rooms || rooms.length === 0) {
+            return res.status(404).json({ message: 'No rooms found with the specified status' });
+        }
+        const roomImages = rooms.rooms.map(room => room.roomImage);
+        res.status(200).json(roomImages);
+    } catch (error) {
         next(error);
     }
 };
@@ -346,6 +365,7 @@ module.exports = {
     deleteHotel,
     getHotelById,
     getHotelRoomsByHotelId,
+    getAllRoomImageByHotelID,
     // existing functions...
     searchHotels,
     sortHotels,

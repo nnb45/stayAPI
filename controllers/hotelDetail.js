@@ -1,7 +1,7 @@
 const { HotelDetail } = require('../models/HotelDetail');
 
 const createHotelDetail = async (req, res, next) => {
-  
+
     const newHotelDetail = new HotelDetail(req.body);
 
     try {
@@ -58,9 +58,10 @@ const getAllHotelDetails = async (req, res, next) => {
     }
 };
 
+
 module.exports = {
     createHotelDetail,
     deleteHotelDetail,
     updateHotelDetail,
-    getAllHotelDetails
+    getAllHotelDetails,
 };

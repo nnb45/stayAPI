@@ -62,20 +62,29 @@ const updateRoomStatus = async (req, res, next) => {
 const UpdateRoomisFinished = async (req, res, next) => {
     try {
         const room = await Room.findById(req.params.id);
-
+        const isFinished = await Room.find(req.params.isFinished);
         if (!room) {
             return res.status(404).json({ message: 'Room not found' });
         }
-
-        room.isFinished = req.body.isFinished;
-
+        if (isFinished === '') {
+            room.roomStatus = 'phòng trống';
+        } else if (isFinished === 'Book') {
+            room.roomStatus = 'phòng đã đặt';
+        } else if (isFinished === 'Done') {
+            room.roomStatus = 'phòng trống';
+        } else if (isFinished === 'Cancel') {
+            room.roomStatus = 'phòng trống';
+        } else {
+            return res.status(400).json({ message: "Is finished must be '','Book', 'Done' or 'Cancel'" });
+        }
+        // room.isFinished = req.body.isFinished;
         await room.save();
 
         res.status(200).json({ message: 'isFinished updated successfully', room });
     } catch (error) {
         res.status(500).json({ message: 'Server error', error });
     }
-}
+};
 
 const deleteRoom = async (req, res, next) => {
     try {

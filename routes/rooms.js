@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
-const { createRoom, updateRoom, deleteRoom, getAllRooms, updateRoomStatus, UpdateRoomisFinished } = require("../controllers/room");
+const { createRoom, updateRoom, deleteRoom, getAllRooms, getAllRoomImage, updateRoomStatus, UpdateRoomisFinished, getAllRoomImageByHotelID } = require("../controllers/room");
 
 router.post('/', createRoom);
 router.put("/:id", updateRoom);
-router.delete("/:id",deleteRoom);
+router.delete("/:id", deleteRoom);
 router.get('/rooms', getAllRooms);
 
 //patch chỉ cần gửi các trường cập nhập
