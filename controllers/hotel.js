@@ -15,7 +15,7 @@ const createHotel = async (req, res, next) => {
 
 const getAllHotels = async (req, res, next) => {
     try {
-        const allHotels = await Hotel.find();
+        const allHotels = await Hotel.find().populate('hotelDetail');
         res.status(200).json(allHotels);
     } catch (error) {
         next(error);
