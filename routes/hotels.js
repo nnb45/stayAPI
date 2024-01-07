@@ -15,7 +15,6 @@ router.get('/sort', sortHotels);
 router.get('/search', searchHotels);
 //! https://stayapi-production.up.railway.app/api/hotel/search?queryType=hotelName&value=Majestic
 
-
 router.get('/filterByRoomStatus', filterByRoomStatus);
 
 //doanh thu 

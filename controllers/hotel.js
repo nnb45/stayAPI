@@ -72,6 +72,7 @@ const deleteRoom = async (req, res, next) => {
 };
 
 const searchHotels = async (req, res, next) => {
+
     try {
         const { queryType, value } = req.query;
         const query = {};
@@ -79,8 +80,8 @@ const searchHotels = async (req, res, next) => {
         if (queryType === 'phoneNumberHotel' && value) {
             // Convert the value to a number if it's a string
             query.phoneNumberHotel = isNaN(value) ? value : parseInt(value);
-        } else if (queryType === 'city' && value) {
-            query.hotelCity = value;
+        } else if (queryType === 'hotelCity' && value) {
+            query.hotelCity = { $regex: new RegExp(value, 'i') };
         } else if (queryType === 'hotelName' && value) {
             query.hotelName = { $regex: new RegExp(value, 'i') }; // Case-insensitive search
         } else if (queryType === 'roomPrice' && value) {
@@ -92,7 +93,20 @@ const searchHotels = async (req, res, next) => {
 
         console.log('Query:', query);
 
-        const hotels = await Hotel.find(query);
+        // const hotels = await Hotel.find(query);
+
+        const hotels = await Hotel.find(query)
+            .populate({
+                path: 'rooms',
+                populate: {
+                    path: 'roomDetail',
+                },
+            })
+            .populate('hotelDetail');
+        if (!hotels) {
+            return res.status(404).json({ message: 'Hotel not found' });
+        }
+
         res.status(200).json(hotels);
     } catch (error) {
         next(error);
@@ -234,7 +248,7 @@ const getAllRoomImageByHotelID = async (req, res, next) => {
             return res.status(404).json({ message: 'No rooms found with the specified status' });
         }
         const roomImages = rooms.rooms.map(room => room.roomImage);
-        res.status(200).json(roomImages);
+        res.status(200).json(rooms.roomImage);
     } catch (error) {
         next(error);
     }
